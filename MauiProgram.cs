@@ -1,25 +1,27 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Pomocnik.Data;
+using System.IO;
 
-namespace Pomocnik
+namespace Pomocnik;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+        // Ścieżka do pliku bazy w katalogu aplikacji
+        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "pomocnik.db3");
 
-            return builder.Build();
-        }
+        // Rejestracja jako Singleton (jedna baza na całe życie aplikacji)
+        builder.Services.AddSingleton(new AppDatabase(dbPath));
+
+        return builder.Build();
     }
 }

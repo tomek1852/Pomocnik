@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pomocnik.Views.MaterialsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Materiały">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj" Clicked="OnAddClicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*" Padding="12">
+        <Label Text="Katalog materiałów"
+               FontAttributes="Bold"
+               FontSize="18"
+               Margin="0,0,0,8"/>
+        <CollectionView x:Name="MaterialsList"
+                        Grid.Row="1"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Edytuj"
+                                           Invoked="OnEditInvoked"/>
+                                <SwipeItem Text="Usuń"
+                                           BackgroundColor="IndianRed"
+                                           Invoked="OnDeleteInvoked"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Grid Padding="8" ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                <Label FontSize="12" TextColor="Gray">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0}/ {1}{2}">
+                                            <Binding Path="PriceNetCents" />
+                                            <Binding Path="Unit" />
+                                            <Binding Path="StdLengthM" StringFormat=" (dł. {0} m)" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1"
+                                   VerticalOptions="Center"
+                                   FontAttributes="Bold">
+                                <Label.Text>
+                                    <!-- 2200 -> 22,00 PLN -->
+                                    <MultiBinding StringFormat="{}{0:N2} PLN">
+                                        <Binding Path="PriceNetCents" Converter="{StaticResource CentsToPlnConverter}"/>
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

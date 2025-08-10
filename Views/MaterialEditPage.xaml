@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Pomocnik.Views.MaterialEditPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Materiał">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="10">
+            <Entry x:Name="NameEntry" Placeholder="Nazwa (np. RHS 60x40x2)"/>
+            <Entry x:Name="CategoryEntry" Placeholder="Kategoria (profile/fastener)" Text="profile"/>
+            <Picker x:Name="UnitPicker" Title="Jednostka">
+                <Picker.Items>
+                    <x:String>mb</x:String>
+                    <x:String>szt</x:String>
+                    <x:String>m2</x:String>
+                    <x:String>kg</x:String>
+                </Picker.Items>
+            </Picker>
+            <Entry x:Name="StdLenEntry" Placeholder="Długość handlowa (m) - opcjonalnie" Keyboard="Numeric"/>
+            <Entry x:Name="PriceEntry" Placeholder="Cena netto (PLN)" Keyboard="Numeric"/>
+            <Entry x:Name="VatEntry" Placeholder="VAT (%)" Keyboard="Numeric" Text="23"/>
+
+            <Button Text="Zapisz" Clicked="OnSaveClicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

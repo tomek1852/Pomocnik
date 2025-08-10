@@ -1,15 +1,12 @@
-﻿namespace Pomocnik
-{
-    public partial class App : Application
-    {
-        public App()
-        {
-            InitializeComponent();
-        }
+﻿namespace Pomocnik;
 
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+public partial class App : Application
+{
+    public App()
+    {
+        InitializeComponent();
+
+        // Używamy Shell — nie owijamy go w NavigationPage
+        MainPage = new AppShell();
     }
 }
